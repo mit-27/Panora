@@ -12,8 +12,11 @@ export const constructAuthUrl = ({ projectId, linkedUserId, providerName, return
   const encodedRedirectUrl = encodeURIComponent(`${apiUrl}/connections/oauth/callback`);
   const state = encodeURIComponent(JSON.stringify({ projectId, linkedUserId, providerName, returnUrl }));
 
+  console.log(JSON.stringify({ projectId, linkedUserId, providerName, returnUrl }))
+  console.log("API Redirect URL : " + `${apiUrl}/connections/oauth/callback`)
+
   const vertical = findProviderVertical(providerName);
-  if(vertical == null) {
+  if (vertical == null) {
     return null;
   }
 
@@ -30,17 +33,17 @@ export const constructAuthUrl = ({ projectId, linkedUserId, providerName, return
   }
   const addScope = providerName == "pipedrive" ? false : true;
   let finalAuth = '';
-  if ( providerName == 'zoho' ) {
+  if (providerName == 'zoho') {
     finalAuth = `${baseUrl}?response_type=code&client_id=${encodeURIComponent(clientId)}&scope=${encodeURIComponent(scopes)}&redirect_uri=${encodedRedirectUrl}&access_type=offline&state=${state}`
     console.log(finalAuth);
-  } else if(providerName == "zendesk"){
+  } else if (providerName == "zendesk") {
     finalAuth = `${baseUrl}?client_id=${encodeURIComponent(clientId)}&response_type=code&redirect_uri=${encodedRedirectUrl}&state=${state}`
-  } else if(providerName == "zendesk_tcg" ||  providerName=="front") {
+  } else if (providerName == "zendesk_tcg" || providerName == "front") {
     finalAuth = `${baseUrl}?client_id=${encodeURIComponent(clientId)}&response_type=code&redirect_uri=${encodedRedirectUrl}&scope=${encodeURIComponent(scopes)}&state=${state}`
-  }else{ 
-    finalAuth = addScope ? 
-    `${baseUrl}?client_id=${encodeURIComponent(clientId)}&redirect_uri=${encodedRedirectUrl}&scope=${encodeURIComponent(scopes)}&state=${state}`
-    : `${baseUrl}?client_id=${encodeURIComponent(clientId)}&redirect_uri=${encodedRedirectUrl}&state=${state}`;
+  } else {
+    finalAuth = addScope ?
+      `${baseUrl}?client_id=${encodeURIComponent(clientId)}&redirect_uri=${encodedRedirectUrl}&scope=${encodeURIComponent(scopes)}&state=${state}`
+      : `${baseUrl}?client_id=${encodeURIComponent(clientId)}&redirect_uri=${encodedRedirectUrl}&state=${state}`;
   }
   return finalAuth;
 };

@@ -5,7 +5,7 @@ type ProviderConfig = {
   logoPath: string;
   description: string;
 };
-  
+
 type VerticalConfig = {
   [key: string]: ProviderConfig;
 };
@@ -13,13 +13,13 @@ type VerticalConfig = {
 type ProvidersConfig = {
   [vertical: string]: VerticalConfig;
 };
-  
-  
+
+
 export const providersConfig: ProvidersConfig = {
   'crm': {
     'hubspot': {
-      clientId: 'ba591170-a7c7-4fca-8086-1bd178c6b14d',
-      scopes: 'crm.objects.contacts.read crm.objects.contacts.write crm.schemas.deals.read crm.schemas.deals.write crm.objects.deals.read crm.objects.deals.write crm.objects.companies.read crm.objects.companies.write crm.objects.owners.read settings.users.read settings.users.write settings.users.teams.read settings.users.teams.write',
+      clientId: '72018c65-c88d-47f0-83ec-600a420eb47a',
+      scopes: 'crm.objects.contacts.read crm.objects.contacts.write',
       authBaseUrl: 'https://app-eu1.hubspot.com/oauth/authorize',
       logoPath: "https://assets-global.website-files.com/6421a177cdeeaf3c6791b745/64d61202dd99e63d40d446f6_hubspot%20logo.png",
       description: "Sync & Create contacts, deals, companies, notes, engagements, stages, tasks and users"
@@ -122,7 +122,7 @@ export const providersConfig: ProvidersConfig = {
 
 export const getDescription = (name: string): string | null => {
   const vertical = findProviderVertical(name);
-  if(vertical == null){
+  if (vertical == null) {
     return null;
   }
   return providersConfig[vertical.toLowerCase()][name].description;
@@ -138,7 +138,7 @@ type Provider = {
 };
 
 export function providersArray(vertical: string): Provider[] {
-  if(!providersConfig[vertical.toLowerCase()]){
+  if (!providersConfig[vertical.toLowerCase()]) {
     return [];
   }
   return Object.entries(providersConfig[vertical.toLowerCase()]).map(([providerName, config]) => {
@@ -176,4 +176,3 @@ export function findProviderByName(providerName: string): Provider | null {
   }
   return null;
 }
-  
