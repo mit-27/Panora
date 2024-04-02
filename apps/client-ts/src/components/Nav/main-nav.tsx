@@ -56,6 +56,12 @@ export function MainNav({
       >
         API Keys
       </a>
+      {/* <a
+        className={navItemClassName('add-0auth-credentials')}
+        onClick={(e) => click(e,'add-0auth-credentials')}
+      >
+        0Auth Credentials
+      </a> */}
       <a
         className={`${navItemClassName('docs')} flex items-center`}
         href="https://docs.panora.dev/"

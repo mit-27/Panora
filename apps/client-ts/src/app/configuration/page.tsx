@@ -37,6 +37,7 @@ import {
   import { usePostHog } from 'posthog-js/react'
   import config from "@/lib/config";
   import useProjectStore from "@/state/projectStore";
+import AddAuthCredentials from "@/components/Configuration/AddAuthCredentials";
   
   export default function Page() {
     const { data: linkedUsers, isLoading, error } = useLinkedUsers();
@@ -99,6 +100,9 @@ import {
                 <TabsTrigger value="webhooks">
                   Webhooks
                 </TabsTrigger>
+                <TabsTrigger value="0auth">
+                  0Auth Credentials
+                </TabsTrigger>
               </TabsList>
               <TabsContent value="linked-accounts" className="space-y-4">
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-12">
@@ -159,6 +163,24 @@ import {
               <TabsContent value="webhooks" className="space-y-4">
                 <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-12">
                   <AddWebhook/>
+                  <Card className="col-span-12">
+                    <CardHeader>
+                      <CardTitle className="text-left">Your Webhooks</CardTitle>
+                      <CardDescription className="text-left">
+                        You enabled {webhooks ? webhooks.length : <Skeleton className="w-[20px] h-[12px] rounded-md" />} webhooks.
+                      </CardDescription>
+                    </CardHeader>
+                    <Separator className="mb-10"/>
+                    <CardContent>
+                      <WebhooksPage webhooks={webhooks} isLoading={isWebhooksLoading} />
+                    </CardContent>
+                  </Card>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="0auth" className="space-y-4">
+                <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-12">
+                  <AddAuthCredentials/>
                   <Card className="col-span-12">
                     <CardHeader>
                       <CardTitle className="text-left">Your Webhooks</CardTitle>

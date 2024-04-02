@@ -84,6 +84,13 @@ export function SmallNav({
               >
               <p className="mx-4">API Keys</p>
             </a>
+            {/* <a
+        className={navItemClassName('add-0auth-credentials')}
+        onClick={(e) => click('add-0auth-credentials')}
+      >
+        <p className="mx-4">0Auth Credentials</p>
+        
+      </a> */}
             <a
               className={`${navItemClassName('docs')} flex items-center`}
               href="https://docs.panora.dev/"
