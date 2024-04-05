@@ -73,12 +73,18 @@ const formSchema = z.object({
     clientSecret : z.string({
         required_error: "Please Enter a Client Secret",
     }),
+    scope : z.string({
+        required_error: "Please Enter a scope",
+    }),
     apiKey: z.string({
         required_error: "Please Enter a API Key",
     }),
-    scope : z.string({
-        required_error: "Please Enter a scope",
-    })
+    username: z.string({
+        required_error: "Please Enter Username",
+    }),
+    secret: z.string({
+        required_error: "Please Enter Secret",
+    }),
 
 })
 
@@ -171,17 +177,17 @@ const AddAuthCredentials = () => {
             Add 0Auth Credentials
         </Button>
         </DialogTrigger>
-        <DialogContent className="sm:w-[450px]">
+        <DialogContent className="sm:w-[450px] lg:max-w-screen-lg overflow-y-scroll max-h-screen">
         <Form {...form}>
 
             <form onSubmit={form.handleSubmit(onSubmit)}>
                 <CardHeader>
                     <CardTitle>Add 0Auth Credentials</CardTitle>
                     <CardDescription>
-                    Add your provider's Credentials for connection.
+                    Add your provider's credentials for connection.
                     </CardDescription>
                 </CardHeader>
-                <CardContent className="grid gap-6">
+                <CardContent className="grid gap-5">
                     <div className="grid gap-4">
                         {/* <div className="grip gap-4"> */}
                         <FormField
@@ -289,6 +295,7 @@ const AddAuthCredentials = () => {
                                         <SelectContent>
                                             <SelectItem value="0Auth2">0Auth2</SelectItem>
                                             <SelectItem value="API">API</SelectItem>
+                                            <SelectItem value="Basic_Auth">Basic Auth</SelectItem>
                                         </SelectContent>
                                         </Select>
                                     </FormControl>
@@ -341,7 +348,7 @@ const AddAuthCredentials = () => {
                                 <FormItem>
                                     <FormLabel className="flex flex-col">Scope</FormLabel>
                                     <FormControl>
-                                    <Input id="clientSecret" value={field.value} onChange={field.onChange} placeholder="Enter Scopes" />
+                                    <Input id="scope" value={field.value} onChange={field.onChange} placeholder="Enter Scopes" />
                                     </FormControl>
                                     <FormMessage/>
                                 </FormItem>
@@ -362,7 +369,43 @@ const AddAuthCredentials = () => {
                                 <FormItem>
                                     <FormLabel className="flex flex-col">API Key</FormLabel>
                                     <FormControl>
-                                    <Input id="apikey" value={field.value} onChange={field.onChange} placeholder="Enter API Key" />
+                                    <PasswordInput id="apiKey" value={field.value} onChange={field.onChange} placeholder="Enter API Key" />
+                                    </FormControl>
+                                    <FormMessage/>
+                                </FormItem>
+                            )}
+                            />
+                        </div>
+                        </>   
+                        :
+                        <></>}
+
+                    {Watch.authMethod==="Basic_Auth" ? 
+                        <>
+                        <div className="flex flex-col">
+                            <FormField
+                            name="username"
+                            control={form.control}
+                            render={({field}) => (
+                                <FormItem>
+                                    <FormLabel className="flex flex-col">Username</FormLabel>
+                                    <FormControl>
+                                    <PasswordInput id="username" value={field.value} onChange={field.onChange} placeholder="Enter API Key" />
+                                    </FormControl>
+                                    <FormMessage/>
+                                </FormItem>
+                            )}
+                            />
+                        </div>
+                        <div className="flex flex-col">
+                            <FormField
+                            name="secret"
+                            control={form.control}
+                            render={({field}) => (
+                                <FormItem>
+                                    <FormLabel className="flex flex-col">Secret</FormLabel>
+                                    <FormControl>
+                                    <PasswordInput id="secret" value={field.value} onChange={field.onChange} placeholder="Enter API Key" />
                                     </FormControl>
                                     <FormMessage/>
                                 </FormItem>

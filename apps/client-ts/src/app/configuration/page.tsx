@@ -38,6 +38,8 @@ import {
   import config from "@/lib/config";
   import useProjectStore from "@/state/projectStore";
 import AddAuthCredentials from "@/components/Configuration/AddAuthCredentials";
+import AuthCredentialsTable from "@/components/Configuration/AuthCredentialsTable";
+import {AUTH_CREDENTIALS_MAPPINGS} from '@/components/Configuration/data/authCredentialsDemo'
   
   export default function Page() {
     const { data: linkedUsers, isLoading, error } = useLinkedUsers();
@@ -183,14 +185,14 @@ import AddAuthCredentials from "@/components/Configuration/AddAuthCredentials";
                   <AddAuthCredentials/>
                   <Card className="col-span-12">
                     <CardHeader>
-                      <CardTitle className="text-left">Your Webhooks</CardTitle>
+                      <CardTitle className="text-left">Your Providers</CardTitle>
                       <CardDescription className="text-left">
-                        You enabled {webhooks ? webhooks.length : <Skeleton className="w-[20px] h-[12px] rounded-md" />} webhooks.
+                        Use and setup the credentials of your providers.
                       </CardDescription>
                     </CardHeader>
                     <Separator className="mb-10"/>
                     <CardContent>
-                      <WebhooksPage webhooks={webhooks} isLoading={isWebhooksLoading} />
+                      <AuthCredentialsTable mappings={AUTH_CREDENTIALS_MAPPINGS} isLoading={false} />
                     </CardContent>
                   </Card>
                 </div>
