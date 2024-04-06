@@ -39,7 +39,7 @@ const RevealCredentialsCard = (data : propType) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
         <DialogTrigger asChild>
-          <Badge variant="outline">Reveal Credentials</Badge>
+          <Badge variant="outline" className=' cursor-pointer'>Reveal Credentials</Badge>
         </DialogTrigger>
         <DialogContent className='sm:w-[450px] lg:max-w-screen-lg overflow-y-scroll max-h-screen'>
             <CardHeader>
@@ -52,15 +52,15 @@ const RevealCredentialsCard = (data : propType) => {
                     <>
                     <div className='flex flex-col'>
                         <div className="flex flex-col">Client ID</div>
-                        <Input type="text" value={authCredentials.clientID} disabled />
+                        <Input type="text" value={authCredentials.clientID} readOnly />
                     </div>
                     <div className='flex flex-col'>
                         <div className="flex flex-col">Client Secret</div>
-                        <Input type="text" value={authCredentials.clientSecret} disabled />
+                        <Input type="text" value={authCredentials.clientSecret} readOnly />
                     </div>
                     <div className='flex flex-col'>
                         <div className="flex flex-col">Scopes</div>
-                        <Input type="text" value={authCredentials.scope} disabled />
+                        <Input type="text" value={authCredentials.scope} readOnly />
                     </div>
                     </>
                 )}
@@ -70,7 +70,7 @@ const RevealCredentialsCard = (data : propType) => {
                     <>
                     <div className='flex flex-col'>
                         <div className="flex flex-col">API</div>
-                        <Input type="text" value={authCredentials.apiKey} disabled />
+                        <Input type="text" value={authCredentials.apiKey} readOnly />
                     </div>
                     
                     </>
@@ -80,11 +80,11 @@ const RevealCredentialsCard = (data : propType) => {
                     <>
                     <div className='flex flex-col'>
                         <div className="flex flex-col">Username</div>
-                        <Input type="text" value={authCredentials.username} disabled />
+                        <Input type="text" value={authCredentials.username} readOnly />
                     </div>
                     <div className='flex flex-col'>
                         <div className="flex flex-col">Secret</div>
-                        <Input type="text" value={authCredentials.secret} disabled />
+                        <Input type="text" value={authCredentials.secret} readOnly />
                     </div>
                    
                     </>

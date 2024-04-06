@@ -12,6 +12,11 @@ import { Button } from "@/components/ui/button"
 import {Switch} from '@/components/ui/switch'
 import { useState } from "react";
 import {
+  Dialog,
+  DialogContent,
+  DialogTrigger,
+} from "@/components/ui/dialog"
+import {
   DropdownMenu,
   DropdownMenuCheckboxItem,
   DropdownMenuContent,
@@ -24,12 +29,13 @@ import {
   DotsHorizontalIcon,
 } from "@radix-ui/react-icons"
 import RevealCredentialsCard from "./RevealCredentialsCard";
+import AddAuthCredentialsForm from "./AddAuthCredentialsForm";
 
 export const authColumns: ColumnDef<Mapping>[] = [
   {
     // acc: 'provider_name',
     // accessorFn: row => `${row.provider_name} ${row.logoPath}`,
-    id:'ProviderName',
+    accessorKey:'provider_name',
     // accessorKey: 'mergeD',
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Provider Name" />
@@ -113,6 +119,7 @@ export const authColumns: ColumnDef<Mapping>[] = [
     ),
     cell: ({ row }) => {
       return (
+        <Dialog>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="h-8 w-8 p-0">
@@ -121,10 +128,19 @@ export const authColumns: ColumnDef<Mapping>[] = [
             </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>           
-            <DropdownMenuItem>Edit</DropdownMenuItem>
+              <DialogTrigger asChild>
+                <DropdownMenuItem>Edit</DropdownMenuItem>    
+              </DialogTrigger>
+              
             <DropdownMenuItem>Delete</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
+
+        <DialogContent className="sm:w-[450px] lg:max-w-screen-lg overflow-y-scroll max-h-screen">
+            <AddAuthCredentialsForm data={row.original} />
+        </DialogContent>
+        </Dialog>
+
       )
     },
     // filterFn: (row, id, value) => {
