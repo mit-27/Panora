@@ -50,7 +50,7 @@ import {
 } from '../../types';
 import { ServiceRegistry } from '../registry.service';
 import { AuthStrategy } from '@panora/shared';
-import { OAuth2AuthData, providerToType } from '@panora/shared/src/envConfig';
+import { OAuth2AuthData, providerToType } from '@panora/shared';
 import { ConnectionsStrategiesService } from '@@core/connections-strategies/connections-strategies.service';
 
 export type ${providerUpper}OAuthResponse = {
@@ -182,10 +182,10 @@ export class ${providerUpper}ConnectionService implements I${verticalUpper}Conne
           headers: {
             'Content-Type': 'application/x-www-form-urlencoded;charset=utf-8',
             Authorization: \`Basic ${Buffer.from(
-              `CREDENTIALS.CLIENT_ID}:\${
+    `CREDENTIALS.CLIENT_ID}:\${
                   CREDENTIALS.CLIENT_SECRET
               }`,
-            ).toString('base64')}\`,
+  ).toString('base64')}\`,
           },
         },
       );

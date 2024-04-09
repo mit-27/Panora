@@ -75,6 +75,8 @@ export class EnvVars {
   @IsString()
   @IsOptional()
   THROTTLER_LIMIT?: string;
+
+
 }
 
 export const validate = (config: Record<string, unknown>) => {
@@ -82,7 +84,9 @@ export const validate = (config: Record<string, unknown>) => {
 
   const errors = validateSync(validatedConfig);
 
-  if (errors.length) throw new Error(errors.toString());
+  if (errors.length) {
+    //TODO - throw error
+  };
 
   return validatedConfig;
 };

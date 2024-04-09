@@ -12,7 +12,7 @@ import {
   ITicketingConnectionService,
 } from '../../types';
 import { ServiceRegistry } from '../registry.service';
-import { OAuth2AuthData, providerToType } from '@panora/shared/src/envConfig';
+import { OAuth2AuthData, providerToType } from '@panora/shared';
 import { AuthStrategy } from '@panora/shared';
 import { ConnectionsStrategiesService } from '@@core/connections-strategies/connections-strategies.service';
 
@@ -36,8 +36,7 @@ export type JiraOAuthResponse = {
 
 @Injectable()
 export class JiraServiceMgmtConnectionService
-  implements ITicketingConnectionService
-{
+  implements ITicketingConnectionService {
   private readonly type: string;
 
   constructor(
@@ -94,7 +93,7 @@ export class JiraServiceMgmtConnectionService
       const data: JiraOAuthResponse = res.data;
       this.logger.log(
         'OAuth credentials : jira_service_mgmt ticketing ' +
-          JSON.stringify(data),
+        JSON.stringify(data),
       );
 
       // get the cloud id from atlassian jira, it is used across requests to the api

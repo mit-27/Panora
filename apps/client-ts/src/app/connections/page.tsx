@@ -1,6 +1,7 @@
 'use client';
 
 import ConnectionTable from "@/components/Connection/ConnectionTable";
+import {ProviderVertical} from '@panora/shared'
 
 export default function ConnectionPage() {
     return (
