@@ -51,16 +51,17 @@ import {PasswordInput} from '@/components/ui/password-input'
 import { scopes } from "@panora/shared"
 import * as z from "zod"
 import { cn } from "@/lib/utils"
+import useProjectStore from "@/state/projectStore"
 
 
 
 const formSchema = z.object({
-    provider_name: z.string({
-        required_error: "Please select a provider.",
+    provider_name: z.string().min(2, {
+        message: "Provider should be selected.",
       }),
-    auth_type : z.string({
-        required_error: "Please select a authentication method",
-    }),
+    auth_type : z.string().min(2, {
+        message: "Authentication type should be selected.",
+      }),
     clientID : z.string({
         required_error: "Please Enter a Client ID",
     }),
@@ -142,6 +143,9 @@ const AddAuthCredentialsForm = (prop : propType) => {
     const [copied, setCopied] = useState(false);
     const [popoverOpen,setPopOverOpen] = useState(false);
 
+    const {idProject} = useProjectStore();
+
+
     const handlePopOverClose = () => {
         setPopOverOpen(false);
     }
@@ -176,6 +180,57 @@ const AddAuthCredentialsForm = (prop : propType) => {
 
 
     function onSubmit(values: z.infer<typeof formSchema>) {
+
+        switch(values.auth_type)
+        {
+            case "0Auth2":
+                if(values.clientID==="" || values.clientSecret==="" || values.scope==="")
+                    {
+                        if(values.clientID==="")
+                            {
+                                form.setError("clientID",{"message":"Please Enter Client ID"})
+                            }
+                        if(values.clientSecret==="")
+                            {
+                                form.setError("clientSecret",{"message":"Please Enter Client Secret"})
+                            }
+                        if(values.scope==="")
+                            {
+                                form.setError("scope",{"message":"Please Enter the scope"})
+                            }
+                            break;
+
+                    }
+                    console.log(values)
+                break;
+            
+            case "API":
+                if(values.apiKey==="")
+                    {
+                        form.setError("apiKey",{"message":"Please Enter API Key"});
+                        break;
+                    }
+                    console.log(values)
+                break;
+
+            case "Basic_Auth":
+                if(values.username==="" || values.secret==="")
+                    {
+                        if(values.username==="")
+                            {
+                                form.setError("username",{"message":"Please Enter Username"})
+                            }
+                        if(values.secret==="")
+                            {
+                                form.setError("secret",{"message":"Please Enter Secret"})
+                            }
+                            break;
+
+                    }
+                    console.log(values)
+                break;
+        }
+
         
     }
 
@@ -239,6 +294,7 @@ const AddAuthCredentialsForm = (prop : propType) => {
                             key={provider.value}
                             onSelect={() => {
                                 form.setValue("provider_name", provider.value)
+                                form.clearErrors("provider_name")
                                 handlePopOverClose();
                             }}
                             className={field.value===provider.value ? "bg-gray-200 w-full" : "w-full"}
@@ -273,11 +329,12 @@ const AddAuthCredentialsForm = (prop : propType) => {
                             </Command>
                             </PopoverContent>
                         </Popover>
+                        <FormMessage />
+
 
                         {/* <FormDescription>
                             This is the language that will be used in the dashboard.
                         </FormDescription> */}
-                        <FormMessage />
                         </FormItem>
                     )}
                     />
@@ -324,7 +381,7 @@ const AddAuthCredentialsForm = (prop : propType) => {
                     <FormItem>
                         <FormLabel className="flex flex-col">Client ID</FormLabel>
                         <FormControl>
-                        <PasswordInput id="clientID" value={field.value} onChange={field.onChange} placeholder="Enter Client ID" />
+                        <PasswordInput {...field}  placeholder="Enter Client ID" />
                         </FormControl>
                         <FormMessage/>
                     </FormItem>
@@ -339,7 +396,7 @@ const AddAuthCredentialsForm = (prop : propType) => {
                     <FormItem>
                         <FormLabel className="flex flex-col">Client Secret</FormLabel>
                         <FormControl>
-                        <PasswordInput id="clientID" value={field.value} onChange={field.onChange} placeholder="Enter Client Secret" />
+                        <PasswordInput {...field} placeholder="Enter Client Secret" />
                         </FormControl>
                         <FormMessage/>
                     </FormItem>
@@ -354,7 +411,7 @@ const AddAuthCredentialsForm = (prop : propType) => {
                     <FormItem>
                         <FormLabel className="flex flex-col">Scope</FormLabel>
                         <FormControl>
-                        <Input id="scope" value={field.value} onChange={field.onChange} placeholder="Enter Scopes" />
+                        <Input {...field} placeholder="Enter Scopes" />
                         </FormControl>
                         <FormMessage/>
                     </FormItem>
@@ -397,7 +454,7 @@ const AddAuthCredentialsForm = (prop : propType) => {
                     <FormItem>
                         <FormLabel className="flex flex-col">API Key</FormLabel>
                         <FormControl>
-                        <PasswordInput id="apiKey" value={field.value} onChange={field.onChange} placeholder="Enter API Key" />
+                        <PasswordInput {...field} placeholder="Enter API Key" />
                         </FormControl>
                         <FormMessage/>
                     </FormItem>
@@ -418,7 +475,7 @@ const AddAuthCredentialsForm = (prop : propType) => {
                     <FormItem>
                         <FormLabel className="flex flex-col">Username</FormLabel>
                         <FormControl>
-                        <PasswordInput id="username" value={field.value} onChange={field.onChange} placeholder="Enter API Key" />
+                        <PasswordInput {...field} placeholder="Enter API Key" />
                         </FormControl>
                         <FormMessage/>
                     </FormItem>
@@ -433,7 +490,7 @@ const AddAuthCredentialsForm = (prop : propType) => {
                     <FormItem>
                         <FormLabel className="flex flex-col">Secret</FormLabel>
                         <FormControl>
-                        <PasswordInput id="secret" value={field.value} onChange={field.onChange} placeholder="Enter API Key" />
+                        <PasswordInput {...field} placeholder="Enter API Key" />
                         </FormControl>
                         <FormMessage/>
                     </FormItem>
